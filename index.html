@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bean & Brew — Specialty Coffee & Roastery</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kycnY16IZCDkgj/WlE+5f2PtkC7o/xJ6zV7WbB2A5t5h1qJ/J7V1S6J92Q+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Variables for easier theme management */
+        :root {
+            --primary-color: #6b3e26; /* coffee brown */
+            --secondary-color: #d99a48; /* warm latte */
+            --dark-color: #222;
+            --light-color: #f8f8f8;
+            --text-color: #333;
+            --white-color: #fff;
+            --shadow-light: 0 4px 10px rgba(0,0,0,0.08);
+            --shadow-medium: 0 8px 15px rgba(0,0,0,0.1);
+            --border-radius: 8px;
+        }
+
+        /* Basic Reset & Typography */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+        body.no-scroll {
+            overflow: hidden; /* Disable scrolling when mobile nav is open */
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-color);
+            margin-bottom: 0.8em;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 1.5em;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1em;
+        }
+        .lead {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.95;
+            margin-bottom: 2em;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-color); /* Kept primary color on hover for consistency */
+            text-decoration: underline;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 15px; /* Space for underline */
+            margin-bottom: 60px; /* More space after title */
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Header */
+        .main-header {
+            background: var(--white-color);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .logo i {
+            margin-left: 8px;
+            font-size: 1.2rem;
+        }
+
+        .main-nav ul {
+            display: flex;
+        }
+
+        .main-nav ul li {
+            margin-left: 35px;
+        }
+
+        .main-nav a {
+            color: var(--dark-color);
+            font-weight: 600;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            padding-bottom: 5px;
+        }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .hamburger {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--dark-color);
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--dark-color);
+            position: absolute;
+            transition: transform 0.3s ease, top 0.3s ease;
+        }
+
+        .hamburger::before {
+            top: -8px;
+        }
+
+        .hamburger::after {
+            top: 8px;
+        }
+
+        /* Hamburger animation */
+        .nav-toggle.open .hamburger {
+            background: transparent;
+        }
+
+        .nav-toggle.open .hamburger::before {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .nav-toggle.open .hamburger::after {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('https://source.unsplash.com/1600x900/?coffee,coffee%20shop,roastery') no-repeat center center/cover fixed; /* Coffee shop hero image */
+            color: var(--white-color);
+            text-align: center;
+            padding: 180px 0; /* More vertical padding */
+            display: flex;
+            align-items: center;
+            min-height: 80vh; /* Taller hero section */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.2); /* Subtle overlay for text contrast */
+            z-index: 1;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2; /* Ensure content is above overlay */
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 25px;
+            color: var(--white-color);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+        }
+
+        .hero .highlight {
+            color: var(--secondary-color);
+        }
+
+        .hero .lead {
+            font-size: 1.6rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; /* Use flex to align icon and text */
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            border-radius: 50px; /* More rounded buttons */
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-decoration: none; /* Ensure no underline */
+            margin: 0 10px; /* Space between buttons */
+        }
+
+        .btn i {
+            margin-left: 10px;
+            font-size: 1.1em;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--white-color);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, var(--primary-color) 0%, #0056b3 100%); /* darken(var(--primary-color), 10%) */
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: var(--white-color);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(45deg, var(--secondary-color) 0%, #1e7e34 100%); /* darken(var(--secondary-color), 10%) */
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-large {
+            padding: 18px 40px;
+            font-size: 1.3rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        /* General Section Styles */
+        section {
+            padding: 100px 0; /* More vertical spacing */
+            position: relative;
+            overflow: hidden; /* For diagonal backgrounds */
+        }
+
+        .bg-light {
+            background-color: var(--light-color);
+        }
+
+        /* Diagonal Backgrounds */
+        .diagonal-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--white-color);
+            transform: skewY(-2deg); /* Slightly less dramatic skew */
+            transform-origin: top left;
+            z-index: -1;
+        }
+
+        .diagonal-bg-green::before {
+            background-color: var(--secondary-color);
+            transform: skewY(-2deg);
+            top: -50px; /* Adjust for smooth transition */
+            height: calc(100% + 100px);
+        }
+        .diagonal-bg-green.alt::before { /* For membership section */
+            transform: skewY(2deg);
+            top: -50px;
+        }
+
+
+        /* About Us Section */
+        .about-us .about-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .about-us .about-text {
+            flex: 1;
+            max-width: 550px;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+
+        .about-us .about-image {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px; /* Control image size */
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+        }
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Why Choose Us */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: var(--white-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .feature-card .icon-large {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* Services and Classes Grid */
+        .service-grid, .class-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Larger min-width for cards */
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .service-card, .class-item {
+            background: var(--white-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Class thumbnail images */
+        .class-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-light);
+        }
+
+        .service-card:hover, .class-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-medium);
+            background-color: #f0f8ff; /* Light blue tint on hover */
+        }
+
+        .service-card h3, .class-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+        }
+
+        .service-card p, .class-item p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .icon-medium {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .classes .icon-medium {
+            color: var(--secondary-color);
+        }
+
+        /* Trainers Section */
+        .trainers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .trainer-card {
+            background: var(--white-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .trainer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .trainer-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid var(--primary-color);
+        }
+
+        .trainer-card h3 {
+            margin-bottom: 5px;
+            color: var(--dark-color);
+            font-size: 1.8rem;
+        }
+
+        .trainer-specialty {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .trainer-social a {
+            color: var(--text-color);
+            font-size: 1.3rem;
+            margin: 0 8px;
+        }
+
+        .trainer-social a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Membership Plans */
+        .membership-plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .plan-card {
+            background: var(--white-color);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .plan-card.featured {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
+            color: var(--white-color);
+            transform: scale(1.05); /* Highlight featured card */
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .plan-card.featured h3,
+        .plan-card.featured .price {
+            color: var(--white-color);
+        }
+        .plan-card.featured ul li {
+            color: rgba(255,255,255,0.9);
+        }
+        .plan-card.featured ul li i {
+            color: var(--secondary-color); /* Green checkmarks for featured */
+        }
+        .plan-card.featured .btn-primary {
+            background: var(--secondary-color); /* Green button on featured card */
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        .plan-card.featured .btn-primary:hover {
+            background: #1e7e34; /* darken(var(--secondary-color), 10%) */
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+        }
+
+
+        .plan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .plan-card h3 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            position: relative;
+        }
+        .plan-card h3::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        .plan-card.featured h3::after {
+            background-color: var(--secondary-color);
+        }
+
+        .plan-card .price {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .plan-card .price span {
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .plan-card ul {
+            margin-bottom: 40px;
+            text-align: left;
+            padding-left: 20px; /* Indent list for better readability */
+        }
+
+        .plan-card ul li {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .plan-card ul li i {
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.2em;
+        }
+        .plan-card ul li .fa-times-circle {
+            color: #dc3545; /* Red for excluded features */
+        }
+
+        /* Testimonials */
+        .testimonial-carousel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            justify-content: center; /* Center cards if not full width */
+        }
+
+        .testimonial-card {
+            background: var(--white-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .testimonial-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid var(--secondary-color);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        /* Call to Action Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
+            color: var(--white-color);
+            text-align: center;
+            padding: 80px 0;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+        }
+
+        .cta-banner h2 {
+            color: var(--white-color);
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-banner p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+
+        /* Contact Form */
+        .contact-spacing {
+            padding-top: 120px; /* Extra spacing if diagonal overlaps */
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
+            align-items: start;
+        }
+
+        .contact-info {
+            text-align: left;
+        }
+
+        .contact-info h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info i {
+            margin-right: 15px;
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            min-width: 25px; /* ensure icons align */
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: var(--white-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+        }
+
+        .contact-form h3 {
+            margin-bottom: 25px;
+            font-size: 2rem;
+            color: var(--dark-color);
+            text-align: center;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            background-color: #fcfcfc;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+        }
+
+        .contact-form .btn {
+            align-self: flex-start; /* Aligns button to the left */
+            margin: 10px 0 0 0; /* Remove default btn margin */
+        }
+
+
+        /* Footer */
+        .main-footer {
+            background: var(--dark-color);
+            color: #bbb;
+            padding: 50px 0; /* More vertical padding */
+            font-size: 0.95rem;
+        }
+
+        .main-footer .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+
+        .footer-col {
+            padding: 0 15px;
+        }
+
+        .footer-col h3 {
+            color: var(--white-color);
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0; /* Align left */
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .footer-logo {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .footer-col.brand-info p {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            color: #bbb;
+            transition: color 0.3s ease;
+        }
+        .footer-col ul li a:hover {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .main-footer .social-links a {
+            color: var(--white-color);
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .main-footer .social-links a:hover {
+            color: var(--primary-color);
+        }
+        .footer-col.connect-with-us .social-links {
+            margin-bottom: 25px;
+        }
+        .footer-col.connect-with-us .address {
+            margin-top: 20px;
+            color: #999;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            h2 {
+                font-size: 2.2rem;
+            }
+            .hero {
+                padding: 120px 0;
+                min-height: 65vh;
+            }
+            .hero .lead {
+                font-size: 1.4rem;
+            }
+            section {
+                padding: 80px 0;
+            }
+            .main-nav ul li {
+                margin-left: 25px;
+            }
+            .about-us .about-content {
+                gap: 30px;
+            }
+            .membership-plans-grid, .service-grid, .class-list, .trainers-grid, .features-grid, .testimonial-carousel, .contact-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            .plan-card:hover, .service-card:hover, .class-item:hover, .trainer-card:hover, .feature-card:hover {
+                transform: none; /* Disable hover effect for smaller screens */
+                box-shadow: var(--shadow-light);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            h2 {
+                font-size: 2rem;
+                margin-bottom: 1em;
+            }
+            h3 {
+                font-size: 1.6rem;
+            }
+            .lead {
+                font-size: 1.2rem;
+                margin-bottom: 25px;
+            }
+            .section-title {
+                margin-bottom: 40px;
+            }
+            .section-title::after {
+                width: 50px;
+                height: 3px;
+            }
+
+            /* Mobile Nav */
+            .nav-toggle {
+                display: block; /* Show toggle button on mobile */
+            }
+            .main-nav {
+                display: none;
+                flex-direction: column;
+                position: fixed; /* Use fixed for full viewport */
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh; /* Full viewport height */
+                background: var(--white-color);
+                padding-top: 100px; /* Space for header */
+                animation: slideInFromTop 0.3s ease-out forwards;
+                z-index: 999; /* Below toggle button */
+                justify-content: flex-start; /* Align menu items to top */
+                overflow-y: auto; /* Allow scrolling if menu is long */
+            }
+
+            .main-nav.active {
+                display: flex;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                width: 100%;
+            }
+
+            .main-nav ul li {
+                margin: 15px 0;
+                width: 100%;
+                text-align: center;
+            }
+            .main-nav a {
+                font-size: 1.5rem;
+                padding: 10px 20px;
+                display: block; /* Make links full width */
+                color: var(--dark-color);
+            }
+            .main-nav a:hover,
+            .main-nav a.active {
+                color: var(--primary-color);
+                background-color: #f0f8ff;
+                border-radius: 5px;
+                border-bottom: none; /* Remove bottom border for mobile links */
+            }
+
+
+            .hero {
+                padding: 100px 0;
+                min-height: 60vh;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .hero .lead {
+                font-size: 1.1rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .btn {
+                width: 80%; /* Make buttons wider on mobile */
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .about-us .about-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .about-us .about-text, .about-us .about-image {
+                max-width: 100%; /* Full width for text and image */
+            }
+            .about-image {
+                order: -1; /* Image above text on mobile */
+            }
+
+            .contact-info {
+                text-align: center;
+            }
+            .contact-info p {
+                justify-content: center; /* Center icons and text */
+            }
+
+            .main-footer .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-col h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .footer-col.brand-info {
+                order: 3; /* Move copyright to bottom */
+            }
+            .footer-col.quick-links ul {
+                padding: 0; /* Remove padding */
+            }
+            .footer-col.connect-with-us .social-links {
+                justify-content: center;
+                display: flex; /* Center social icons */
+            }
+            .logo.footer-logo {
+                justify-content: center;
+            }
+
+            .diagonal-bg::before,
+            .diagonal-bg-green::before,
+            .diagonal-bg-green.alt::before {
+                transform: skewY(0deg); /* Remove diagonal effect on mobile for simplicity */
+                margin-left: 0;
+                height: 100%;
+                top: 0;
+            }
+            .contact-spacing {
+                padding-top: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            h3 {
+                font-size: 1.4rem;
+            }
+            .hero {
+                padding: 80px 0;
+                min-height: 50vh;
+            }
+            .hero .lead {
+                font-size: 1rem;
+            }
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+                width: 90%;
+            }
+            .service-card h3, .class-item h3 {
+                font-size: 1.4rem;
+            }
+            .icon-medium {
+                font-size: 2.2rem;
+            }
+            .plan-card .price {
+                font-size: 3rem;
+            }
+            .cta-banner h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideInFromTop {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="#home" class="logo">Bean & Brew <i class="fas fa-coffee"></i></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#subscriptions">Subscriptions</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="nav-toggle" aria-label="toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Sip Better Coffee at <span class="highlight">Bean & Brew</span></h1>
+                    <p class="lead">Specialty-roasted beans, handcrafted drinks, and a cozy space to savor your morning.</p>
+                    <div class="hero-buttons">
+                        <a href="#menu" class="btn btn-primary">View Menu</a>
+                        <a href="#about" class="btn btn-secondary">Our Story</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-us diagonal-bg">
+            <div class="container">
+                <h2 class="section-title">About Bean & Brew</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Bean & Brew is a specialty coffee shop and micro-roastery. We source single-origin beans, roast them in small batches, and craft drinks that highlight flavor and balance.</p>
+                        <p>Our space doubles as a community hub where you can enjoy expertly made espresso, seasonal filter brews, and house-baked pastries. Stop by for a tasting, a bag of fresh beans, or a cozy seat to get some work done.</p>
+                        <a href="#contact" class="btn btn-primary">Visit Us <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                          <div class="about-image">
+                              <img src="https://source.unsplash.com/900x600/?coffee,coffee%20shop,beans" alt="Coffee shop interior and beans" class="img-fluid" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/about-coffee/900/600'">
+                          </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Section: Why Choose Us -->
+        <section id="why-choose-us" class="why-choose-us">
+            <div class="container">
+                <h2 class="section-title">Why Choose Bean & Brew?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-coffee icon-large"></i>
+                        <h3>Cozy Ambience</h3>
+                        <p>Relax in a warm, welcoming space perfect for meeting friends or catching up on work.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-seedling icon-large"></i>
+                        <h3>Expert Roasting</h3>
+                        <p>Small-batch roasts tuned to bring out the best tasting notes from each origin.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-leaf icon-large"></i>
+                        <h3>Sustainably Sourced</h3>
+                        <p>We partner with ethical farms and cooperatives to ensure fair, traceable beans.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-birthday-cake icon-large"></i>
+                        <h3>Fresh Pastries</h3>
+                        <p>Daily-baked pastries and seasonal treats that pair perfectly with our coffee.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services bg-light">
+            <div class="container">
+                <h2 class="section-title">What We Offer</h2>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <i class="fas fa-coffee icon-medium"></i>
+                        <h3>Fresh Roasted Beans</h3>
+                        <p>Buy single-origin beans roasted daily — whole bean or ground to order.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-mug-hot icon-medium"></i>
+                        <h3>Crafted Drinks</h3>
+                        <p>Espresso, pour-over, cold brew, and seasonal specials made by expert baristas.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-leaf icon-medium"></i>
+                        <h3>Workshops & Tastings</h3>
+                        <p>Weekly cuppings and brewing classes to deepen your coffee knowledge.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-birthday-cake icon-medium"></i>
+                        <h3>Pastry Pairings</h3>
+                        <p>Fresh pastries from local bakers selected to pair with our roasts.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-box-open icon-medium"></i>
+                        <h3>Wholesale & Subscriptions</h3>
+                        <p>Subscribe to regular deliveries or place wholesale orders for your shop.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-gift icon-medium"></i>
+                        <h3>Gift Cards & Merch</h3>
+                        <p>Gift cards, mugs, and merch for coffee lovers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="classes diagonal-bg-green">
+            <div class="container">
+                <h2 class="section-title">Our Menu</h2>
+                <p class="text-center">Handcrafted drinks and seasonal specials — brewed to highlight each bean's flavor profile.</p>
+                <div class="class-list">
+                    <div class="class-item">
+                        <img src="https://source.unsplash.com/600x400/?espresso,coffee" alt="Espresso Classics" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/espresso/600/400'">
+                        <i class="fas fa-mug-hot icon-medium"></i>
+                        <h3>Espresso Classics</h3>
+                        <p>Ristretto, doppio, macchiato, and classic espresso drinks prepared to order.</p>
+                    </div>
+                    <div class="class-item">
+                        <img src="https://source.unsplash.com/600x400/?latte,latte%20art" alt="Lattes & Milk Drinks" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/latte/600/400'">
+                        <i class="fas fa-coffee-togo icon-medium"></i>
+                        <h3>Lattes & Milk Drinks</h3>
+                        <p>Silky lattes, cappuccinos, and seasonal spice lattes with beautiful latte art.</p>
+                    </div>
+                    <div class="class-item">
+                        <img src="https://source.unsplash.com/600x400/?cold%20brew,iced%20coffee" alt="Cold Brew & Iced" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/coldbrew/600/400'">
+                        <i class="fas fa-ice-cream icon-medium"></i>
+                        <h3>Cold Brew & Iced</h3>
+                        <p>House cold-brew, nitro, and refreshing iced coffees for warm days.</p>
+                    </div>
+                    <div class="class-item">
+                        <img src="https://source.unsplash.com/600x400/?pastry,croissant" alt="Pastries & Snacks" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pastry/600/400'">
+                        <i class="fas fa-birthday-cake icon-medium"></i>
+                        <h3>Pastries & Snacks</h3>
+                        <p>Daily pastries from local bakers — croissants, muffins, and savory options.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <a href="#" class="btn btn-secondary">View Full Menu <i class="fas fa-utensils"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section: Baristas -->
+        <section id="team" class="trainers bg-light">
+            <div class="container">
+                <h2 class="section-title">Meet Our Baristas</h2>
+                <p class="text-center">Our passionate team roasts, crafts, and serves every cup with care — say hello to the people behind your coffee.</p>
+                <div class="trainers-grid">
+                    <div class="trainer-card">
+                        <img src="https://source.unsplash.com/400x400/?barista,coffee,portrait" alt="Ava Martinez" class="trainer-img" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/barista-ava/200/200'">
+                        <h3>Ava Martinez</h3>
+                        <p class="trainer-specialty">Head Barista & Latte Artist</p>
+                        <p>Ava leads our bar team, crafting signature lattes and teaching latte-art workshops for guests.</p>
+                        <div class="trainer-social">
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="trainer-card">
+                        <img src="https://source.unsplash.com/400x400/?roaster,coffee,portrait" alt="Liam Carter" class="trainer-img" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/roaster-liam/200/200'">
+                        <h3>Liam Carter</h3>
+                        <p class="trainer-specialty">Roaster & Quality Control</p>
+                        <p>Liam oversees our micro-roastery, cupping new batches to ensure consistent, delicious flavor profiles.</p>
+                        <div class="trainer-social">
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="trainer-card">
+                        <img src="https://source.unsplash.com/400x400/?pastry,chef,portrait" alt="Maya Singh" class="trainer-img" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pastry-maya/200/200'">
+                        <h3>Maya Singh</h3>
+                        <p class="trainer-specialty">Pastry Chef & Pairings</p>
+                        <p>Maya curates our pastry menu, designing flavors that complement seasonal roasts and drinks.</p>
+                        <div class="trainer-social">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <a href="#contact" class="btn btn-primary">Visit Us & Meet The Team <i class="fas fa-handshake"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Section: Membership Plans -->
+        <section id="memberships" class="memberships diagonal-bg-green alt">
+            <div class="container">
+                <h2 class="section-title">Choose Your Path to Fitness</h2>
+                <p class="text-center">Flexible membership options designed to fit your lifestyle and fitness aspirations.</p>
+                <div class="membership-plans-grid">
+                    <div class="plan-card">
+                        <h3>Basic Access</h3>
+                        <p class="price">$30<span>/month</span></p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Full Gym Access</li>
+                            <li><i class="fas fa-check-circle"></i> Cardio & Weight Zones</li>
+                            <li><i class="fas fa-times-circle"></i> Group Classes Not Included</li>
+                            <li><i class="fas fa-times-circle"></i> No Personal Training</li>
+                        </ul>
+                        <a href="#" class="btn btn-secondary">Select Plan</a>
+                    </div>
+                    <div class="plan-card featured">
+                        <h3>Premium Fit</h3>
+                        <p class="price">$50<span>/month</span></p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Full Gym Access</li>
+                            <li><i class="fas fa-check-circle"></i> Unlimited Group Classes</li>
+                            <li><i class="fas fa-check-circle"></i> 1 Free Personal Training Session</li>
+                            <li><i class="fas fa-check-circle"></i> Nutritional Workshops</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Get Started Now</a>
+                    </div>
+                    <div class="plan-card">
+                        <h3>Elite Performance</h3>
+                        <p class="price">$90<span>/month</span></p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> All Premium Benefits</li>
+                            <li><i class="fas fa-check-circle"></i> 4 Personal Training Sessions/Month</li>
+                            <li><i class="fas fa-check-circle"></i> Custom Meal Plans</li>
+                            <li><i class="fas fa-check-circle"></i> Priority Class Booking</li>
+                        </ul>
+                        <a href="#" class="btn btn-secondary">Select Plan</a>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                   <p>Not sure which plan is right for you? <a href="#contact">Contact us</a> for a personalized recommendation!</p>
+                </div>
+            </div>
+        </section>
+
+         <!-- New Section: Testimonials -->
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <h2 class="section-title">What Our Members Say</h2>
+                <div class="testimonial-carousel">
+                    <div class="testimonial-card">
+                        <img src="https://source.unsplash.com/80x80/?person,fitness,smile" alt="Testimonial User 1" class="testimonial-avatar" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/testi1/80/80'">
+                        <p class="testimonial-text">"FitLife Gym changed my life! The trainers are amazing, the atmosphere is so motivating, and I've achieved goals I never thought possible. Highly recommend!"</p>
+                        <p class="testimonial-author">- Sarah P.</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <img src="https://source.unsplash.com/80x80/?person,workout,fitness" alt="Testimonial User 2" class="testimonial-avatar" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/testi2/80/80'">
+                        <p class="testimonial-text">"I love the variety of classes and the modern equipment. It's truly a welcoming place for everyone, from beginners to advanced athletes. Best gym in town!"</p>
+                        <p class="testimonial-author">- Mark T.</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <img src="https://source.unsplash.com/80x80/?athlete,person,fitness" alt="Testimonial User 3" class="testimonial-avatar" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/testi3/80/80'">
+                        <p class="testimonial-text">"The nutrition coaching was a game-changer for me. I not only got fit but also learned how to eat healthier for life. Thank you, FitLife!"</p>
+                        <p class="testimonial-author">- Emily R.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="cta-bottom" class="cta-banner">
+            <div class="container">
+                <h2>Ready to Start Your Fitness Journey?</h2>
+                <p>Join FitLife Gym today and unlock your full potential!</p>
+                <a href="#memberships" class="btn btn-primary btn-large">View Membership Options <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </section>
+
+        <section id="contact" class="contact bg-light diagonal-bg contact-spacing">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="text-center">Have questions or want to learn more? Send us a message or visit us!</p>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Our Location</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Fitness Ave, Gym City, GC 12345</p>
+                        <h3>Call Us</h3>
+                        <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                        <h3>Email Us</h3>
+                        <p><i class="fas fa-envelope"></i> info@fitlifegym.com</p>
+                        <h3>Working Hours</h3>
+                        <p><i class="fas fa-clock"></i> Mon-Fri: 6 AM - 10 PM</p>
+                        <p style="margin-left: 25px;">Sat-Sun: 8 AM - 6 PM</p>
+                    </div>
+                    <form class="contact-form">
+                        <h3>Send Us a Message</h3>
+                        <input type="text" placeholder="Your Name" required aria-label="Your Name">
+                        <input type="email" placeholder="Your Email" required aria-label="Your Email">
+                        <input type="tel" placeholder="Your Phone (Optional)" aria-label="Your Phone Number">
+                        <textarea placeholder="Your Message" rows="6" aria-label="Your Message"></textarea>
+                        <button type="submit" class="btn btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-col brand-info">
+                <a href="#" class="logo footer-logo">FitLife <i class="fas fa-dumbbell"></i></a>
+                <p>&copy; 2023 FitLife Gym. All rights reserved.</p>
+            </div>
+            <div class="footer-col quick-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#classes">Classes</a></li>
+                    <li><a href="#memberships">Memberships</a></li>
+                </ul>
+            </div>
+            <div class="footer-col connect-with-us">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p class="address">123 Fitness Ave, Gym City, GC 12345</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navToggle = document.querySelector('.nav-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            const navLinks = document.querySelectorAll('.main-nav a');
+            const header = document.querySelector('.main-header');
+
+            // Toggle navigation for mobile
+            navToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+                navToggle.classList.toggle('open'); // For hamburger animation
+                document.body.classList.toggle('no-scroll'); // Prevent scrolling when nav is open
+            });
+
+            // Close mobile nav when a link is clicked
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        navToggle.classList.remove('open');
+                        document.body.classList.remove('no-scroll');
+                    }
+                });
+            });
+
+            // Close mobile nav if resized to desktop view while open
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768 && mainNav.classList.contains('active')) {
+                    mainNav.classList.remove('active');
+                    navToggle.classList.remove('open');
+                    document.body.classList.remove('no-scroll');
+                }
+            });
+
+            // Smooth scrolling for anchor links and active link highlighting
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetSect = document.querySelector(targetId);
+
+                    if (targetSect) {
+                        // Determine offset for fixed header
+                        const offset = header.offsetHeight;
+                        const bodyRect = document.body.getBoundingClientRect().top;
+                        const elementRect = targetSect.getBoundingClientRect().top;
+                        const elementPosition = elementRect - bodyRect;
+                        const offsetPosition = elementPosition - offset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+
+                        // Update active class immediately or after scroll completes
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Form submission example (prevent default and show alert)
+            const contactForm = document.querySelector('.contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Prevent actual form submission
+                    alert('Thank you for your message! We will get back to you soon.');
+                    this.reset(); // Clear the form fields
+                });
+            }
+
+            // Intersection Observer for highlighting active nav links on scroll
+            const sections = document.querySelectorAll('section');
+            const options = {
+                root: null, // viewport
+                rootMargin: '-50% 0px -50% 0px', // When section midpoint is in viewport
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').includes(id)) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, options);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Initial active link for the home section
+            // Check if the top of the body is at or near the top
+            if (window.scrollY === 0) {
+                const homeLink = document.querySelector('.main-nav a[href="#home"]');
+                if (homeLink) {
+                    homeLink.classList.add('active');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
